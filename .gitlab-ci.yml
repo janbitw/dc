@@ -1,0 +1,14 @@
+stages:
+    - build
+
+
+build-java:
+    stage: build
+    image: gradle:8.0.2-jdk17
+    script:
+        - echo "Compiling"
+        - gradle build
+    artifacts:
+        paths:
+            - ./build/libs/*.jar
+        expire_in: 1 week
