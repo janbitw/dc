@@ -5,7 +5,7 @@ stages:
   - deploy
 
 variables:
-  PROJECT_DIR: "./01project/demo"
+  PROJECT_DIR: "./01project/"
 
 build-demo:
   stage: build
@@ -56,3 +56,4 @@ dockerize-demo:
     - cd $PROJECT_DIR
     - docker build -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
+
