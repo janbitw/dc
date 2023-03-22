@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id("org.sonarqube") version "4.0.0.2929"
+    id 'jacoco'
 }
 
 group 'de.thro.vv'
@@ -10,15 +12,40 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.slf4j:slf4j-api:2.0.6'
+    implementation 'ch.qos.logback:logback-classic:1.4.5'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 test {
     useJUnitPlatform()
+    ignoreFailures = true
+    finalizedBy jacocoTestReport
+}
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://inf-sonarqube.th-rosenheim.de"
+        property "sonar.projectKey", "TamasJan"
+    }
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     manifest {
         attributes(
                 'Main-Class': 'Hello'
