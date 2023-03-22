@@ -1,5 +1,6 @@
 stages:
     - build
+    - test
 
 
 build-java:
@@ -12,3 +13,12 @@ build-java:
         paths:
             - ./build/libs/*.jar
         expire_in: 1 week
+
+test-java:
+    stage: test
+    image: adoptopenjdk:17-jre-hotspot
+    script:
+        - echo "Testing"
+        - cd ./build/libs
+        - java -jar *.jar
+    
