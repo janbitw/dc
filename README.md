@@ -1,1 +1,0 @@
-In diesem Projekt arbeite ich momentan an drei Exercises, doch nur Exercise01 besitzt Inhalt.
