@@ -5,9 +5,9 @@ stages:
   - deploy
 
 variables:
-  PROJECT_DIR: "./01project/"
+  PROJECT_DIR: "./Exercise01/"
 
-build-demo:
+build-Ex01:
   stage: build
   image: gradle:8.0-jdk17
   script:
@@ -19,7 +19,7 @@ build-demo:
       - $PROJECT_DIR/build/*
     expire_in: 1 day
 
-test-demo:
+test-Ex01:
   stage: test
   image: gradle:8.0-jdk17
   script:
@@ -34,7 +34,7 @@ test-demo:
       - $PROJECT_DIR/build/*
     expire_in: 1 day
 
-analyse-demo:
+analyse-Ex01:
   stage: analyse
   image: gradle:8.0-jdk17
   allow_failure: true
@@ -43,7 +43,7 @@ analyse-demo:
     - echo "Dumping Information into Sonarqube"
     - gradle sonarqube -Dsonar.login=$SONAR_TOKEN
 
-dockerize-demo:
+dockerize-Ex01:
   # Official docker image.
   image: docker:latest
   stage: deploy
