@@ -1,6 +1,7 @@
 package de.thro.vv;
-import java.sql.Date;
+
 import java.util.concurrent.BlockingQueue;
+
 import static de.thro.vv.EnvironmentVariables.logger;
 
 public class AppointmentChecker {

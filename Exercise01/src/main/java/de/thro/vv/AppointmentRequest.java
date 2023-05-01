@@ -15,13 +15,6 @@ public class AppointmentRequest {
     // Transient = von JSon ignoriert
     private transient boolean success;
 
-    public AppointmentRequest() {
-        this.customerName = null;
-        this.appointmentRequestHour = -1;
-        this.createDate = null;
-        this.success = false;
-    }
-
     public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate, boolean success) {
         this.customerName = customerName;
         this.appointmentRequestHour = appointmentRequestHour;
