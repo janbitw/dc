@@ -21,7 +21,7 @@ public class AppointmentChecker {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     AppointmentRequest appointment = inputQueue.take();
-                    logger.info("Appointment thas has been taken out of the inputQueue: {}", appointment);
+                    logger.info("Appointment that has been taken out of the inputQueue: {}", appointment);
                     inputToOutputQueue(appointment);
                 } catch (InterruptedException e) {
                     logger.error("Error: {}", e.getMessage(), e);
