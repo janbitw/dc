@@ -1,11 +1,9 @@
 package de.thro.vv;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.concurrent.*;
-
-import static de.thro.vv.EnvironmentVariables.logger;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     private static final int MAX_THREADS = 10;

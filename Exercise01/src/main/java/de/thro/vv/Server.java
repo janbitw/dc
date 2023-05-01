@@ -8,16 +8,14 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
-    private int port;
-    private Executor executor;
-    private BlockingQueue<AppointmentRequest> inputQueue;
+    private final int port;
+    private final Executor executor;
+    private final BlockingQueue<AppointmentRequest> inputQueue;
 
 
     public Server(int port, Executor executor, BlockingQueue<AppointmentRequest> inputQueue) {

@@ -7,8 +7,8 @@ public class AppointmentChecker {
     private static final int[] DAY = new int[24];
     private final static int MAX_CUSTOMERS_PER_HOUR = EnvironmentVariables.MAX_CUSTOMERS_PER_HOUR;
 
-    private BlockingQueue<AppointmentRequest> inputQueue;
-    private BlockingQueue<AppointmentRequest> outputQueue;
+    private final BlockingQueue<AppointmentRequest> inputQueue;
+    private final BlockingQueue<AppointmentRequest> outputQueue;
 
     public AppointmentChecker(BlockingQueue<AppointmentRequest> inputQueue, BlockingQueue<AppointmentRequest> outputQueue) {
         this.inputQueue = inputQueue;
@@ -18,7 +18,7 @@ public class AppointmentChecker {
     // Read AppointmentRequest from global inputQueue.
     // Take this appointmentRequest and
     public void listen() {
-            while (!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted()) {
                 try {
                     AppointmentRequest appointment = inputQueue.take();
                     logger.info("Appointment that has been taken out of the inputQueue: {}", appointment);
