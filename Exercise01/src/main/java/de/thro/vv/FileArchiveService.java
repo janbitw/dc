@@ -1,8 +1,6 @@
 package de.thro.vv;
 
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +9,7 @@ import java.util.concurrent.BlockingQueue;
 import static de.thro.vv.EnvironmentVariables.logger;
 
 public class FileArchiveService {
+    private static final String DELIMITER = "/";
     private final BlockingQueue<AppointmentRequest> queue;
     private static final String PATH = EnvironmentVariables.getSavePath();
 
@@ -23,7 +22,6 @@ public class FileArchiveService {
             try {
                 AppointmentRequest request = queue.take();
                 logger.info("Following appointment has been taken out of output queue: {}", request);
-                // logger.info("Taken appointment: {}", request);
                 saveFile(request);
             } catch (InterruptedException e) {
                 logger.error("Error: {}", e.getMessage(), e);
@@ -34,11 +32,11 @@ public class FileArchiveService {
 
     void saveFile(AppointmentRequest request) {
         String folderName = request.isSuccess() ? PATH + "/success" : PATH + "/failed";
-        File folder = new File(folderName + "/" + request.getAppointmentRequestHour());
+        File folder = new File(folderName + DELIMITER + request.getAppointmentRequestHour());
         folder.mkdirs();
 
         String fileName = request.getCustomerName() + ".json";
-        File file = new File(folder.getPath() + "/" + fileName);
+        File file = new File(folder.getPath() + DELIMITER + fileName);
 
         try (FileWriter writer = new FileWriter(file)) {
             Gson gson = new Gson();

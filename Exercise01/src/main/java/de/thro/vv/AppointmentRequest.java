@@ -13,7 +13,7 @@ public class AppointmentRequest {
     @SerializedName(value="createDate")
     private Date createDate; // yyyy-MM-dd hh:mm:ss
     // Transient = von JSon ignoriert
-    private transient boolean success;
+    private boolean success;
 
     public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate, boolean success) {
         this.customerName = customerName;

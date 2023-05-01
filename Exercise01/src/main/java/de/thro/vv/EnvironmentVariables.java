@@ -6,8 +6,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 public class EnvironmentVariables {
-    public static final Logger logger = LoggerFactory.getLogger(Main.class);
-    public static Map<String, String> env = getGetenv();
+    private static final String ILLEGAL_ARGUMENT_EXCEPTION = "IllegalArgumentException: {}";
+    public static final Logger logger = LoggerFactory.getLogger(EnvironmentVariables.class);
+    static final Map<String, String> env = getGetenv();
     // Mockito
     private static Map<String, String> getGetenv() {
         return System.getenv();
@@ -39,6 +40,10 @@ public class EnvironmentVariables {
         return SAVE_PATH;
     }
 
+    private EnvironmentVariables(){
+
+    }
+
     public static int readStartTime(){
         int startDate = -1;
         try {
@@ -54,7 +59,7 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error("IllegalArgumentException: {}", e.getMessage());
+            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
         }
         return startDate;
     }
@@ -74,7 +79,7 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error("IllegalArgumentException: {}", e.getMessage());
+            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
         }
         return endDate;
     }
@@ -96,7 +101,7 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error("IllegalArgumentException: {}", e.getMessage());
+            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
         }
         return maxCustomers;
     }
@@ -117,7 +122,7 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error("IllegalArgumentException: {}", e.getMessage());
+            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
         }
         return socketPortInt;
     }
@@ -133,7 +138,7 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error("IllegalArgumentException: {}", e.getMessage());
+            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
         }
         return savePath;
     }

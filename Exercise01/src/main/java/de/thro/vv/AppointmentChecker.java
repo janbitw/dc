@@ -6,7 +6,7 @@ import static de.thro.vv.EnvironmentVariables.logger;
 
 public class AppointmentChecker {
     private static final int[] DAY = new int[24];
-    private final static int MAX_CUSTOMERS_PER_HOUR = EnvironmentVariables.MAX_CUSTOMERS_PER_HOUR;
+    private static final int MAX_CUSTOMERS_PER_HOUR = EnvironmentVariables.MAX_CUSTOMERS_PER_HOUR;
 
     private final BlockingQueue<AppointmentRequest> inputQueue;
     private final BlockingQueue<AppointmentRequest> outputQueue;
