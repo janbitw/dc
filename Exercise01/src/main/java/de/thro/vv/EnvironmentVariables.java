@@ -2,31 +2,28 @@ package de.thro.vv;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 
 public class EnvironmentVariables {
+    public static final Logger logger = LoggerFactory.getLogger(Main.class);
+    public static Map<String, String> env = getGetenv();
+    // Mockito
+    private static Map<String, String> getGetenv() {
+        return System.getenv();
+    }
 
-    private EnvironmentVariables(){}
+    public static final int START_TIME = readStartTime();
 
-    static final String ILLEGAL_ARGUMENT_EXCEPTION = "IllegalArgumentException: {}";
-    public static final Logger logger = LoggerFactory.getLogger(EnvironmentVariables.class);
-    protected static final Map<String, String> env = getGetenv();
-
-    public static final LocalTime START_TIME = readStartTime();
-    public static final LocalTime END_TIME = readEndTime();
+    public static final int END_TIME = readEndTime();
     public static final int MAX_CUSTOMERS_PER_HOUR = readMaxCustomersPerHour();
     public static final int SOCKET_PORT = readSocketPort();
     public static final String SAVE_PATH = readSavePath();
-
-    public static LocalTime getStartTime(){
+    public static int getStartTime(){
         return START_TIME;
     }
 
-    public static LocalTime getEndTime(){
+    public static int getEndTime(){
         return END_TIME;
     }
 
@@ -41,53 +38,48 @@ public class EnvironmentVariables {
     public static String getSavePath(){
         return SAVE_PATH;
     }
-    // Mockito
-    private static Map<String, String> getGetenv() {
-        return System.getenv();
-    }
 
-    static LocalTime readStartTime(){
-        LocalTime startDate = null;
+    public static int readStartTime(){
+        int startDate = -1;
         try {
             String startTime = env.get("START_TIME");
             if (startTime == null) {
                 throw new IllegalArgumentException("START_TIME environment variable not set");
             }
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm");
-            startDate = LocalTime.parse(startTime, format);
+            startDate = Integer.parseInt(startTime);
             logger.info("START_TIME: {}", startDate);
         }
-        catch (DateTimeParseException e) {
+        catch (NumberFormatException  e) {
             logger.error("ParseException: {}", e.getMessage());
         }
 
         catch (IllegalArgumentException e) {
-            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
+            logger.error("IllegalArgumentException: {}", e.getMessage());
         }
         return startDate;
     }
 
-    static LocalTime readEndTime(){
-        LocalTime endDate = null;
+    public static int readEndTime(){
+        int endDate = -1;
         try {
-            String endTime = env.get("END_TIME");
+            String endTime = env.get("START_TIME");
             if (endTime == null) {
-                throw new IllegalArgumentException("END_TIME environment variable not set");
+                throw new IllegalArgumentException("START_TIME environment variable not set");
             }
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm");
-            endDate = LocalTime.parse(endTime, format);
-            logger.info("END_TIME: {}", endDate);
+            endDate = Integer.parseInt(endTime);
+            logger.info("START_TIME: {}", endDate);
         }
         catch (DateTimeParseException e) {
             logger.error("ParseException: {}", e.getMessage());
         }
 
         catch (IllegalArgumentException e) {
-            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
+            logger.error("IllegalArgumentException: {}", e.getMessage());
         }
         return endDate;
     }
 
+    // Warum nicht public?
     static int readMaxCustomersPerHour(){
         int maxCustomers = -1;
         try {
@@ -104,12 +96,12 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
+            logger.error("IllegalArgumentException: {}", e.getMessage());
         }
         return maxCustomers;
     }
 
-    static int readSocketPort(){
+    public static int readSocketPort(){
         int socketPortInt = -1;
         try {
             String socketPort = env.get("SOCKET_PORT");
@@ -125,12 +117,12 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
+            logger.error("IllegalArgumentException: {}", e.getMessage());
         }
         return socketPortInt;
     }
 
-    static String readSavePath(){
+    public static String readSavePath(){
         String savePath = null;
         try {
             savePath = env.get("SAVE_PATH");
@@ -141,7 +133,7 @@ public class EnvironmentVariables {
         }
 
         catch (IllegalArgumentException e) {
-            logger.error(ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
+            logger.error("IllegalArgumentException: {}", e.getMessage());
         }
         return savePath;
     }

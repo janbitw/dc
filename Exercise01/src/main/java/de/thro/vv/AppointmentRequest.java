@@ -2,8 +2,61 @@ package de.thro.vv;
 
 import java.util.Date;
 
+
 public class AppointmentRequest {
     private String customerName;
     private int appointmentRequestHour;
     private Date createDate; // yyyy-MM-dd hh:mm:ss
+    // Transient = von JSon ignoriert
+    private boolean success;
+
+    public AppointmentRequest() {
+        this.customerName = null;
+        this.appointmentRequestHour = -1;
+        this.createDate = null;
+        this.success = false;
+    }
+
+    public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate, boolean success) {
+        this.customerName = customerName;
+        this.appointmentRequestHour = appointmentRequestHour;
+        this.createDate = createDate;
+        this.success = success;
+    }
+
+    public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate){
+        this(customerName, appointmentRequestHour, createDate, false);
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public int getAppointmentRequestHour() {
+        return appointmentRequestHour;
+    }
+
+    public void setAppointmentRequestHour(int appointmentRequestHour) {
+        this.appointmentRequestHour = appointmentRequestHour;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }
