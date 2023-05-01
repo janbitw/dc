@@ -16,19 +16,32 @@ public class AppointmentChecker {
         this.outputQueue = outputQueue;
     }
 
+    // Check if appointment can be scheduled. Then, set its success status accordingly and return the appointment.
+    static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
+        int requestHour = appointment.getAppointmentRequestHour();
+
+        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > MAX_CUSTOMERS_PER_HOUR) {
+            return appointment;
+        }
+
+        DAY[requestHour] += 1;
+        appointment.setSuccess(true);
+        return appointment;
+    }
+
     // Read AppointmentRequest from global inputQueue.
     // Take this appointmentRequest and
     public void listen() {
         while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    AppointmentRequest appointment = inputQueue.take();
-                    logger.info("Appointment that has been taken out of the inputQueue: {}", appointment);
-                    inputToOutputQueue(appointment);
-                } catch (InterruptedException e) {
-                    logger.error("Error: {}", e.getMessage(), e);
-                    Thread.currentThread().interrupt();
-                }
+            try {
+                AppointmentRequest appointment = inputQueue.take();
+                logger.info("Appointment that has been taken out of the inputQueue: {}", appointment);
+                inputToOutputQueue(appointment);
+            } catch (InterruptedException e) {
+                logger.error("Error: {}", e.getMessage(), e);
+                Thread.currentThread().interrupt();
             }
+        }
     }
 
     // Take the request you listened to and check first if it is valid by calling checkAppointment,
@@ -43,18 +56,5 @@ public class AppointmentChecker {
             logger.error("Couldn't put new AppointmentRequest into : {}", e.getMessage(), e);
             Thread.currentThread().interrupt();
         }
-    }
-
-    // Check if appointment can be scheduled. Then, set its success status accordingly and return the appointment.
-    static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
-        int requestHour = appointment.getAppointmentRequestHour();
-
-        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > MAX_CUSTOMERS_PER_HOUR) {
-            return appointment;
-        }
-
-        DAY[requestHour] += 1;
-        appointment.setSuccess(true);
-        return appointment;
     }
 }

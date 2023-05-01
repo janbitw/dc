@@ -1,6 +1,7 @@
 package de.thro.vv;
 
 import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,8 +11,8 @@ import static de.thro.vv.EnvironmentVariables.logger;
 
 public class FileArchiveService {
     private static final String DELIMITER = "/";
-    private final BlockingQueue<AppointmentRequest> queue;
     private static final String PATH = EnvironmentVariables.getSavePath();
+    private final BlockingQueue<AppointmentRequest> queue;
 
     public FileArchiveService(BlockingQueue<AppointmentRequest> queue) {
         this.queue = queue;

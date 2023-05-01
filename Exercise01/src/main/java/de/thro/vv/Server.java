@@ -31,17 +31,16 @@ public class Server {
                 logger.info("Waiting for the next connection...");
                 Socket client = server.accept();
                 logger.info("New connection established!");
-                executor.execute(()->handleClient(client));
+                executor.execute(() -> handleClient(client));
             }
-        }
-        catch(Exception x) {
+        } catch (Exception x) {
             logger.error("Ausnahme {}", x.getMessage(), x);
         }
     }
 
     // Lese Json files aus der Quelle
-    private void handleClient(Socket source)  {
-        try (JsonReader reader = new JsonReader(new InputStreamReader(source.getInputStream()))){
+    private void handleClient(Socket source) {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(source.getInputStream()))) {
             reader.setLenient(true);
 
             while (!Thread.currentThread().isInterrupted()) {
@@ -53,13 +52,12 @@ public class Server {
     }
 
     // Nehme Json Files aus der Quelle und füge sie der inputQueue zu
-    private void addRequest(JsonReader reader){
-        try{
+    private void addRequest(JsonReader reader) {
+        try {
             AppointmentRequest request = new Gson().fromJson(reader, AppointmentRequest.class);
             inputQueue.put(request);
             logger.info("Added following request to queue: {}", request);
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Thread.currentThread().interrupt();
         }
     }

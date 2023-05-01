@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 public class AppointmentRequest {
-    @SerializedName(value="customerName")
+    @SerializedName(value = "customerName")
     private String customerName;
-    @SerializedName(value="appointmentRequestHour")
+    @SerializedName(value = "appointmentRequestHour")
     private int appointmentRequestHour;
-    @SerializedName(value="createDate")
+    @SerializedName(value = "createDate")
     private Date createDate; // yyyy-MM-dd hh:mm:ss
     // Transient = von JSon ignoriert
     private boolean success;
@@ -22,7 +22,7 @@ public class AppointmentRequest {
         this.success = success;
     }
 
-    public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate){
+    public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate) {
         this(customerName, appointmentRequestHour, createDate, false);
     }
 
