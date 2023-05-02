@@ -1,13 +1,10 @@
 package de.thro.vv;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
-
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class AppointmentRequestTest {
@@ -37,7 +34,7 @@ class AppointmentRequestTest {
 
     @Test
     void getAppointmentRequestHour() {
-        assertEquals(10, test.getAppointmentRequestHour());
+        Assertions.assertEquals(10, test.getAppointmentRequestHour());
     }
 
     @Test
