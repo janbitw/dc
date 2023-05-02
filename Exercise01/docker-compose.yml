@@ -1,7 +1,7 @@
 services:
   Exercise01:
     env_file:
-      - docker.env
+      - config.env
     image: inf-docker.fh-rosenheim.de/vv-inf-sose23/tamasjan
     hostname: exercise01
     container_name: exercise01
@@ -12,8 +12,7 @@ services:
       - STORAGE="/var/opt/service"
     volumes:
       - storage:/var/opt/service
-      - storage:/appointments/Success/
-      - storage:/appointments/Failed/
+      - storage:/appointments/
 
 volumes:
   storage:
