@@ -1,7 +1,8 @@
-package de.thro.vv;
+package de.thro.vv.processing_data;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import de.thro.vv.model.AppointmentRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

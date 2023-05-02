@@ -1,0 +1,20 @@
+services:
+  Exercise01:
+    env_file:
+      - docker.env
+    image: inf-docker.fh-rosenheim.de/vv-inf-sose23/tamasjan
+    hostname: exercise01
+    container_name: exercise01
+    ports:
+      - "10080:10013"
+    environment:
+      - PORT=10013
+      - STORAGE="/var/opt/service"
+    volumes:
+      - storage:/var/opt/service
+      - storage:/appointments/Success/
+      - storage:/appointments/Failed/
+
+volumes:
+  storage:
+    driver: local

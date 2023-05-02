@@ -1,5 +1,7 @@
-package de.thro.vv;
+package de.thro.vv.processing_data;
 
+import de.thro.vv.model.AppointmentRequest;
+import de.thro.vv.EnvironmentVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +23,7 @@ public class AppointmentChecker {
     }
 
     // Check if appointment can be scheduled. Then, set its success status accordingly and return the appointment.
-    static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
+    public static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
         int requestHour = appointment.getAppointmentRequestHour();
 
         if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > env.getMaxCustomersPerHour()) {
@@ -50,7 +52,7 @@ public class AppointmentChecker {
 
     // Take the request you listened to and check first if it is valid by calling checkAppointment,
     // and then save this processed request into outputQueue.
-    void inputToOutputQueue(AppointmentRequest request) {
+    public void inputToOutputQueue(AppointmentRequest request) {
         AppointmentRequest processedRequest = checkAppointment(request);
         try {
             logger.info("Following appointment will be added to outputQueue: {}", processedRequest);

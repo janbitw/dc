@@ -1,6 +1,8 @@
 package de.thro.vv;
 
 import com.google.gson.Gson;
+import de.thro.vv.model.AppointmentRequest;
+import de.thro.vv.processing_data.Server;
 import org.junit.jupiter.api.Test;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

@@ -1,5 +1,7 @@
 package de.thro.vv;
 
+import de.thro.vv.model.AppointmentRequest;
+import de.thro.vv.processing_data.FileArchiveService;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

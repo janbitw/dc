@@ -1,5 +1,6 @@
 package de.thro.vv;
 
+import de.thro.vv.model.AppointmentRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

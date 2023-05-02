@@ -3,21 +3,10 @@ stages:
   - test
   - analyse
   - deploy
+  - docker-compse
 
 variables:
-  PROJECT_DIR: "./Exercise01/"
-
-build-Ex01:
-  stage: build
-  image: gradle:8.0-jdk17
-  script:
-    - cd $PROJECT_DIR
-    - echo "compiling and creating deployable artifact"
-    - gradle assemble
-  artifacts:
-    paths:
-      - $PROJECT_DIR/build/*
-    expire_in: 1 day
+  PROJECT_DIR: "./Exercise01/TamasJan"
 
 test-Ex01:
   stage: test
@@ -30,6 +19,18 @@ test-Ex01:
     reports:
       junit:
         - $PROJECT_DIR/build/test-results/test/TEST-*.xml
+    paths:
+      - $PROJECT_DIR/build/*
+    expire_in: 1 day
+
+build-Ex01:
+  stage: build
+  image: gradle:8.0-jdk17
+  script:
+    - cd $PROJECT_DIR
+    - echo "compiling and creating deployable artifact"
+    - gradle assemble
+  artifacts:
     paths:
       - $PROJECT_DIR/build/*
     expire_in: 1 day
@@ -56,4 +57,17 @@ dockerize-Ex01:
     - cd $PROJECT_DIR
     - docker build -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
+
+docker-compose-Ex01:
+  image: docker:latest
+  stage: docker-compose
+  services:
+    - docker:dind
+  before_script:
+    - docker pull eclipse-temurin:17.0.6_10-jre
+    - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    - cd $PROJECT_DIR
+    - docker-compose up -d
+    - docker ps | grep -q "exercise01"
 

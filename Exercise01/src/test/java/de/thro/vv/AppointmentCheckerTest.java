@@ -1,5 +1,7 @@
 package de.thro.vv;
 
+import de.thro.vv.model.AppointmentRequest;
+import de.thro.vv.processing_data.AppointmentChecker;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -40,7 +42,6 @@ class AppointmentCheckerTest {
         AppointmentRequest wrong = new AppointmentRequest("Wrongo", -10, currentDate);
         assertFalse(correct.isSuccess());
         assertFalse(wrong.isSuccess());
-        // assertTrue(AppointmentChecker.checkAppointment(correct).isSuccess());
         assertFalse(AppointmentChecker.checkAppointment(wrong).isSuccess());
 
     }

@@ -1,4 +1,4 @@
-package de.thro.vv;
+package de.thro.vv.model;
 
 import com.google.gson.annotations.SerializedName;
 

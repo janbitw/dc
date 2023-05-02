@@ -1,6 +1,8 @@
-package de.thro.vv;
+package de.thro.vv.processing_data;
 
 import com.google.gson.Gson;
+import de.thro.vv.model.AppointmentRequest;
+import de.thro.vv.EnvironmentVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +25,7 @@ public class FileArchiveService {
         this.queue = queue;
     }
 
-    void listen() {
+    public void listen() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 AppointmentRequest request = queue.take();
@@ -36,7 +38,7 @@ public class FileArchiveService {
         }
     }
 
-    void saveFile(AppointmentRequest request) {
+    public void saveFile(AppointmentRequest request) {
         String folderName = request.isSuccess() ? PATH + "/success" : PATH + "/failed";
         File folder = new File(folderName + DELIMITER + request.getAppointmentRequestHour());
 

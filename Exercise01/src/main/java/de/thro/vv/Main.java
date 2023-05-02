@@ -1,5 +1,9 @@
 package de.thro.vv;
 
+import de.thro.vv.model.AppointmentRequest;
+import de.thro.vv.processing_data.AppointmentChecker;
+import de.thro.vv.processing_data.FileArchiveService;
+import de.thro.vv.processing_data.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
