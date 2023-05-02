@@ -3,7 +3,7 @@ stages:
   - test
   - analyse
   - deploy
-  - docker-compse
+  - docker-compose
 
 variables:
   PROJECT_DIR: "./Exercise01/TamasJan"
