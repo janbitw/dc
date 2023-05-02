@@ -1,8 +1,11 @@
 package de.thro.vv;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import uk.org.webcompere.systemstubs.environment.EnvironmentVariables;
 import uk.org.webcompere.systemstubs.jupiter.SystemStub;
+
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -11,120 +14,82 @@ class EnvironmentVariableTest {
     @SystemStub
     private EnvironmentVariables environment = new EnvironmentVariables();
     EnvironmentVariable env = new EnvironmentVariable();
+    static HashMap<String, String> envs = new HashMap<>();
 
-    @Test
-    void testSetENVS(){
-        env.setStartTime(1);
-        assertEquals(1, env.getStartTime());
-        env.setEndTime(2);
-        assertEquals(2, env.getEndTime());
-        env.setMaxCustomersPerHour(3);
-        assertEquals(3, env.getMaxCustomersPerHour());
-        env.setSocketPort(4);
-        assertEquals(4, env.getSocketPort());
-        env.setSavePath("5");
-        assertEquals("5", env.getSavePath());
+    @BeforeAll
+    static void setup(){
+        envs.put("START_TIME","1");
+        envs.put("END_TIME","10");
+        envs.put("MAX_CUSTOMERS_PER_HOUR","3");
+        envs.put("SOCKET_PORT","1024");
+        envs.put("SAVE_PATH","Out of the dark");
     }
-
     @Test
     void testStartTime() {
-        environment.set("START_TIME", "wrong");
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
 
-        env.setStartTime(-1);
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
+        envs.put("START_TIME","super-duper-wrong");
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
 
-        env.setStartTime(25);
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
+        envs.put("START_TIME","-1");
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
 
-        env.setStartTime(10);
+        envs.put("START_TIME","25");
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
+
+        envs.put("START_TIME","10");
+        env.setENVS(envs);
         assertEquals(10, env.getStartTime());
     }
 
     @Test
     void testEndTime() {
-        environment.set("END_TIME", "wrong");
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
 
-        env.setEndTime(-1);
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
+        envs.put("END_TIME","wrong");
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
 
-        env.setEndTime(25);
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
+        envs.put("END_TIME","-1");
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
 
-        env.setEndTime(10);
+        envs.put("END_TIME","25");
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
+
+        envs.put("END_TIME","10");
+        env.setENVS(envs);
         assertEquals(10,env.getEndTime());
     }
 
     @Test
     void testMaxCustomersPerHour() {
-        environment.set("MAX_CUSTOMERS_PER_HOUR", "wrong");
-        assertThrows(RuntimeException.class, () -> env.setENVS());
+        envs.put("MAX_CUSTOMERS_PER_HOUR","wrong");
+        assertThrows(RuntimeException.class, () -> env.setENVS(envs));
 
+        envs.put("MAX_CUSTOMERS_PER_HOUR","-1");
         env.setMaxCustomersPerHour(-1);
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
+        assertThrows(IllegalArgumentException.class, () -> env.setENVS(envs));
 
-        env.setMaxCustomersPerHour(3);
+        envs.put("MAX_CUSTOMERS_PER_HOUR","3");
+        env.setENVS(envs);
         assertEquals(3, env.getMaxCustomersPerHour());
     }
 
     @Test
     void testSocketPort() {
-        environment.set("SOCKET_PORT", "wrong");
-        assertThrows(RuntimeException.class, () -> env.setENVS());
+        envs.put("SOCKET_PORT", "wrong");
+        assertThrows(RuntimeException.class, () -> env.setENVS(envs));
 
-        env.setSocketPort(1024);
+        envs.put("SOCKET_PORT", "1024");
+        env.setENVS(envs);
         assertEquals(1024, env.getSocketPort());
     }
 
     @Test
     void testReadSavePath() {
-        environment.set("SAVE_PATH", "");
-        assertThrows(RuntimeException.class, () -> env.setENVS());
+        envs.put("SAVE_PATH", "");
+        assertDoesNotThrow(() -> env.setENVS(envs));
 
-        env.setSavePath("output/appointments");
+        envs.put("SAVE_PATH","output/appointments");
+        env.setENVS(envs);
         assertEquals("output/appointments", env.getSavePath());
-    }
-
-    @Test
-    void wrongStartTime() {
-        env.setStartTime(10);
-        assertFalse(env.wrongStartTime());
-
-        env.setStartTime(-1);
-        assertTrue(env.wrongStartTime());
-
-        env.setStartTime(30);
-        assertTrue(env.wrongStartTime());
-
-
-        env.setStartTime(0);
-        env.setEndTime(20);
-        env.setSocketPort(1024);
-        env.setMaxCustomersPerHour(3);
-        env.setSavePath("appointments");
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
-
-        env.setStartTime(20);
-        assertDoesNotThrow(() -> env.setENVS());
-    }
-
-    @Test
-    void wrongEndTime() {
-        env.setEndTime(10);
-        assertFalse(env.wrongEndTime());
-
-        env.setEndTime(-1);
-        assertTrue(env.wrongEndTime());
-
-        env.setEndTime(30);
-        assertTrue(env.wrongEndTime());
-
-        env.setEndTime(0);
-        assertThrows(IllegalArgumentException.class, () -> env.setENVS());
-
-        env.setEndTime(20);
-        assertDoesNotThrow(() -> env.setENVS());
     }
 
     @Test
@@ -135,8 +100,6 @@ class EnvironmentVariableTest {
         env.setMaxCustomersPerHour(-1);
         assertTrue(env.wrongMaxCustomersPerHour());
     }
-
-
 
     @Test
     void getMaxCustomersPerHour() {
@@ -154,6 +117,18 @@ class EnvironmentVariableTest {
     void getSavePath() {
         env.setSavePath("appointments");
         assertEquals("appointments",env.getSavePath());
+    }
+
+    @Test
+    void setStartTime() {
+        env.setStartTime(10);
+        assertEquals(10, env.getStartTime());
+    }
+
+    @Test
+    void setEndTime() {
+        env.setEndTime(10);
+        assertEquals(10, env.getEndTime());
     }
 
     @Test

@@ -1,18 +1,26 @@
 package de.thro.vv;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private static final int MAX_THREADS = 10;
 
     public static void main(String[] args) {
+        Main m = new Main();
+        m.logBasicDetails();
 
         EnvironmentVariable env = new EnvironmentVariable();
         try{
-            env.setENVS();
+            Map<String, String> envs = System.getenv();
+            env.setENVS(envs);
         }
         catch(IllegalArgumentException e){
             System.exit(-1);
@@ -37,6 +45,13 @@ public class Main {
         FileArchiveService fileManager = new FileArchiveService(outputQueue);
         Thread fileArchiveserviceThread = new Thread(fileManager::listen);
         fileArchiveserviceThread.start();
+    }
 
+    public void logBasicDetails(){
+        logger.info("Start program");
+        logger.info("JAVA_HOME: {}", System.getenv("JAVA_HOME"));
+        logger.info("Operating System: {}", System.getenv("os.name"));
+        logger.info("Version: {}", System.getenv("os.version"));
+        logger.info("User: {}", System.getenv("user.name"));
     }
 }

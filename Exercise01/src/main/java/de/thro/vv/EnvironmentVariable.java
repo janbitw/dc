@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.Map;
 
 
 public class EnvironmentVariable {
@@ -26,9 +27,9 @@ public class EnvironmentVariable {
     private String savePath;
 
 
-    public void setENVS(){
+    public void setENVS(Map<String, String> getEnv) throws IllegalArgumentException {
         try{
-            startTime = Integer.parseInt(getenv("START_TIME"));
+            startTime = Integer.parseInt(getEnv.get("START_TIME"));
         }
         catch (NumberFormatException e){
             logger.error("Wrong format for START_TIME");
@@ -38,7 +39,7 @@ public class EnvironmentVariable {
 
 
         try{
-            endTime = Integer.parseInt(getenv("END_TIME"));
+            endTime = Integer.parseInt(getEnv.get("END_TIME"));
         }
         catch (NumberFormatException e){
             logger.error("Wrong format for END_TIME");
@@ -48,7 +49,7 @@ public class EnvironmentVariable {
 
 
         try{
-            maxCustomersPerHour = Integer.parseInt(getenv("MAX_CUSTOMERS_PER_HOUR"));
+            maxCustomersPerHour = Integer.parseInt(getEnv.get("MAX_CUSTOMERS_PER_HOUR"));
         }
         catch (NumberFormatException e){
             logger.error("Wrong format for MAX_CUSTOMERS_PER_HOUR");
@@ -58,21 +59,15 @@ public class EnvironmentVariable {
 
 
         try{
-            socketPort = Integer.parseInt(getenv("SOCKET_PORT"));
+            socketPort = Integer.parseInt(getEnv.get("SOCKET_PORT"));
         }
         catch (NumberFormatException e){
             logger.error("Wrong format for SOCKET_PORT");
             throw new IllegalArgumentException();
         }
 
+        savePath = getEnv.get("SAVE_PATH");
 
-        try{
-            savePath = getenv("SAVE_PATH");
-        }
-        catch (IllegalArgumentException e){
-            logger.error("Illegal Argument for SAVE_PATH");
-            throw new IllegalArgumentException();
-        }
     }
 
     public boolean wrongStartTime(){
@@ -97,9 +92,5 @@ public class EnvironmentVariable {
         }
         logger.error("MAX_CUSTOMERS_PER_HOUR needs to be positive");
         return true;
-    }
-
-    public String getenv(String key){
-        return System.getenv(key);
     }
 }

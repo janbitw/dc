@@ -2,11 +2,14 @@ package de.thro.vv;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class AppointmentChecker {
     private static final Logger logger = LoggerFactory.getLogger(AppointmentChecker.class);
     private static EnvironmentVariable env = new EnvironmentVariable();
+    Map<String, String> envs = System.getenv();
 
     private final BlockingQueue<AppointmentRequest> inputQueue;
     private final BlockingQueue<AppointmentRequest> outputQueue;
@@ -14,7 +17,7 @@ public class AppointmentChecker {
     private static final int[] DAY = new int[24];
 
     public AppointmentChecker(BlockingQueue<AppointmentRequest> inputQueue, BlockingQueue<AppointmentRequest> outputQueue) {
-        env.setENVS();
+        env.setENVS(envs);
         this.inputQueue = inputQueue;
         this.outputQueue = outputQueue;
     }

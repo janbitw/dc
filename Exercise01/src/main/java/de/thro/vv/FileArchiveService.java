@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class FileArchiveService {
     private static final Logger logger = LoggerFactory.getLogger(FileArchiveService.class);
     private static EnvironmentVariable env = new EnvironmentVariable();
+    Map<String, String> envs = System.getenv();
 
     private final BlockingQueue<AppointmentRequest> queue;
 
@@ -19,7 +21,7 @@ public class FileArchiveService {
     private static final String DELIMITER = "/";
 
     public FileArchiveService(BlockingQueue<AppointmentRequest> queue) {
-        env.setENVS();
+        env.setENVS(envs);
         this.queue = queue;
     }
 

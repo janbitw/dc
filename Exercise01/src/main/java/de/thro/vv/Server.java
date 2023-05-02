@@ -38,9 +38,11 @@ public class Server {
         }
     }
 
+
     // Lese Json files aus der Quelle
-    private void handleClient(Socket source) {
+    public void handleClient(Socket source) {
         try (JsonReader reader = new JsonReader(new InputStreamReader(source.getInputStream()))) {
+            logger.info("Received request: {}", reader);
             reader.setLenient(true);
 
             while (!Thread.currentThread().isInterrupted()) {
@@ -52,7 +54,7 @@ public class Server {
     }
 
     // Nehme Json Files aus der Quelle und füge sie der inputQueue zu
-    private void addRequest(JsonReader reader) {
+    public  void addRequest(JsonReader reader) {
         try {
             AppointmentRequest request = new Gson().fromJson(reader, AppointmentRequest.class);
             inputQueue.put(request);
