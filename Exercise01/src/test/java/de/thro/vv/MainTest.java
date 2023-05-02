@@ -10,17 +10,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MainTest {
     List<ILoggingEvent> logsList;
+
     @Test
     void constructor() {
-        assertDoesNotThrow(() -> new Main());
+        assertDoesNotThrow(Main::new);
     }
 
     @BeforeEach
-    void setup(){
+    void setup() {
         Logger mainLogger = (Logger) LoggerFactory.getLogger(Main.class);
 
         ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
@@ -32,10 +34,12 @@ class MainTest {
     }
 
     @AfterEach
-    void clear() {logsList.clear();}
+    void clear() {
+        logsList.clear();
+    }
 
     @Test
-    void testLogBasicDetails(){
+    void testLogBasicDetails() {
         Main m = new Main();
         m.logBasicDetails();
         assertTrue(logsList.get(1).getMessage().startsWith("JAVA_HOME: "));

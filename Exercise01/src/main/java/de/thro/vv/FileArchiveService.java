@@ -12,13 +12,11 @@ import java.util.concurrent.BlockingQueue;
 
 public class FileArchiveService {
     private static final Logger logger = LoggerFactory.getLogger(FileArchiveService.class);
-    private static EnvironmentVariable env = new EnvironmentVariable();
-    Map<String, String> envs = System.getenv();
-
-    private final BlockingQueue<AppointmentRequest> queue;
-
-    private static final String PATH = env.getSavePath();
     private static final String DELIMITER = "/";
+    private static final EnvironmentVariable env = new EnvironmentVariable();
+    private static final String PATH = env.getSavePath();
+    private final BlockingQueue<AppointmentRequest> queue;
+    Map<String, String> envs = System.getenv();
 
     public FileArchiveService(BlockingQueue<AppointmentRequest> queue) {
         env.setENVS(envs);
@@ -41,7 +39,6 @@ public class FileArchiveService {
     void saveFile(AppointmentRequest request) {
         String folderName = request.isSuccess() ? PATH + "/success" : PATH + "/failed";
         File folder = new File(folderName + DELIMITER + request.getAppointmentRequestHour());
-        folder.mkdirs();
 
         String fileName = request.getCustomerName() + ".json";
         File file = new File(folder.getPath() + DELIMITER + fileName);

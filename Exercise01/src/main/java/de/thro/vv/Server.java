@@ -54,7 +54,7 @@ public class Server {
     }
 
     // Nehme Json Files aus der Quelle und füge sie der inputQueue zu
-    public  void addRequest(JsonReader reader) {
+    public void addRequest(JsonReader reader) {
         try {
             AppointmentRequest request = new Gson().fromJson(reader, AppointmentRequest.class);
             inputQueue.put(request);

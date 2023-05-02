@@ -1,9 +1,10 @@
 package de.thro.vv;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 
@@ -28,40 +29,36 @@ public class EnvironmentVariable {
 
 
     public void setENVS(Map<String, String> getEnv) throws IllegalArgumentException {
-        try{
+        try {
             startTime = Integer.parseInt(getEnv.get("START_TIME"));
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             logger.error("Wrong format for START_TIME");
             throw new IllegalArgumentException();
         }
         if (wrongStartTime()) throw new IllegalArgumentException();
 
 
-        try{
+        try {
             endTime = Integer.parseInt(getEnv.get("END_TIME"));
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             logger.error("Wrong format for END_TIME");
             throw new IllegalArgumentException();
         }
         if (wrongEndTime()) throw new IllegalArgumentException();
 
 
-        try{
+        try {
             maxCustomersPerHour = Integer.parseInt(getEnv.get("MAX_CUSTOMERS_PER_HOUR"));
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             logger.error("Wrong format for MAX_CUSTOMERS_PER_HOUR");
             throw new IllegalArgumentException();
         }
         if (wrongMaxCustomersPerHour()) throw new IllegalArgumentException();
 
 
-        try{
+        try {
             socketPort = Integer.parseInt(getEnv.get("SOCKET_PORT"));
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             logger.error("Wrong format for SOCKET_PORT");
             throw new IllegalArgumentException();
         }
@@ -70,24 +67,24 @@ public class EnvironmentVariable {
 
     }
 
-    public boolean wrongStartTime(){
-        if (0 <= startTime && startTime <= 23){
+    public boolean wrongStartTime() {
+        if (0 <= startTime && startTime <= 23) {
             return false;
         }
         logger.error("START_TIME is out of range");
         return true;
     }
 
-    public boolean wrongEndTime(){
-        if (0 <= endTime && endTime <= 23){
+    public boolean wrongEndTime() {
+        if (0 <= endTime && endTime <= 23) {
             return false;
         }
         logger.error("END_TIME is out of range");
         return true;
     }
 
-    public boolean wrongMaxCustomersPerHour(){
-        if (maxCustomersPerHour >= 0){
+    public boolean wrongMaxCustomersPerHour() {
+        if (maxCustomersPerHour >= 0) {
             return false;
         }
         logger.error("MAX_CUSTOMERS_PER_HOUR needs to be positive");

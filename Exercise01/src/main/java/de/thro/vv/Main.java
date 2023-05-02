@@ -18,11 +18,10 @@ public class Main {
         m.logBasicDetails();
 
         EnvironmentVariable env = new EnvironmentVariable();
-        try{
+        try {
             Map<String, String> envs = System.getenv();
             env.setENVS(envs);
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.exit(-1);
         }
         int port = env.getSocketPort();
@@ -47,7 +46,7 @@ public class Main {
         fileArchiveserviceThread.start();
     }
 
-    public void logBasicDetails(){
+    public void logBasicDetails() {
         logger.info("Start program");
         logger.info("JAVA_HOME: {}", System.getenv("JAVA_HOME"));
         logger.info("Operating System: {}", System.getenv("os.name"));

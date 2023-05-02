@@ -2,7 +2,6 @@ package de.thro.vv;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +10,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.stream.Stream;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FileArchiveServiceTest {
     BlockingQueue<AppointmentRequest> queue;
@@ -23,7 +24,7 @@ class FileArchiveServiceTest {
 
 
     @Test
-    void saveFile() {
+    void saveFile() throws IOException {
         EnvironmentVariable env = new EnvironmentVariable();
         Map<String, String> envs = System.getenv();
         env.setENVS(envs);
@@ -39,7 +40,6 @@ class FileArchiveServiceTest {
             try (Stream<Path> files = Files.list(path)) {
                 assertEquals(1, files.count());
             }
-            catch (IOException e){}
         }
 
         Path path2 = Paths.get(env.getSavePath() + "/failed/10" + System.getProperty("file.separator"));
@@ -47,7 +47,6 @@ class FileArchiveServiceTest {
             try (Stream<Path> files = Files.list(path2)) {
                 assertEquals(1, files.count());
             }
-            catch (IOException e){}
         }
 
     }
