@@ -6,7 +6,19 @@ stages:
   - docker-compose
 
 variables:
-  PROJECT_DIR: "./Exercise01/TamasJan"
+  PROJECT_DIR: "./Exercise01/"
+
+build-Ex01:
+  stage: build
+  image: gradle:8.0-jdk17
+  script:
+    - cd $PROJECT_DIR
+    - echo "compiling and creating deployable artifact"
+    - gradle assemble
+  artifacts:
+    paths:
+      - $PROJECT_DIR/build/*
+    expire_in: 1 day
 
 test-Ex01:
   stage: test
@@ -19,18 +31,6 @@ test-Ex01:
     reports:
       junit:
         - $PROJECT_DIR/build/test-results/test/TEST-*.xml
-    paths:
-      - $PROJECT_DIR/build/*
-    expire_in: 1 day
-
-build-Ex01:
-  stage: build
-  image: gradle:8.0-jdk17
-  script:
-    - cd $PROJECT_DIR
-    - echo "compiling and creating deployable artifact"
-    - gradle assemble
-  artifacts:
     paths:
       - $PROJECT_DIR/build/*
     expire_in: 1 day
