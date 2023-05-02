@@ -1,17 +1,20 @@
 package de.thro.vv;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.concurrent.BlockingQueue;
 
-import static de.thro.vv.EnvironmentVariables.logger;
-
 public class AppointmentChecker {
-    private static final int[] DAY = new int[24];
-    private static final int MAX_CUSTOMERS_PER_HOUR = EnvironmentVariables.MAX_CUSTOMERS_PER_HOUR;
+    private static final Logger logger = LoggerFactory.getLogger(AppointmentChecker.class);
+    private static EnvironmentVariable env = new EnvironmentVariable();
 
     private final BlockingQueue<AppointmentRequest> inputQueue;
     private final BlockingQueue<AppointmentRequest> outputQueue;
 
+    private static final int[] DAY = new int[24];
+
     public AppointmentChecker(BlockingQueue<AppointmentRequest> inputQueue, BlockingQueue<AppointmentRequest> outputQueue) {
+        env.setENVS();
         this.inputQueue = inputQueue;
         this.outputQueue = outputQueue;
     }
@@ -20,7 +23,7 @@ public class AppointmentChecker {
     static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
         int requestHour = appointment.getAppointmentRequestHour();
 
-        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > MAX_CUSTOMERS_PER_HOUR) {
+        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > env.getMaxCustomersPerHour()) {
             return appointment;
         }
 

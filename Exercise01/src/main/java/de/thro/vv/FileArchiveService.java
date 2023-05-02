@@ -1,20 +1,25 @@
 package de.thro.vv;
 
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
-import static de.thro.vv.EnvironmentVariables.logger;
-
 public class FileArchiveService {
-    private static final String DELIMITER = "/";
-    private static final String PATH = EnvironmentVariables.getSavePath();
+    private static final Logger logger = LoggerFactory.getLogger(FileArchiveService.class);
+    private static EnvironmentVariable env = new EnvironmentVariable();
+
     private final BlockingQueue<AppointmentRequest> queue;
 
+    private static final String PATH = env.getSavePath();
+    private static final String DELIMITER = "/";
+
     public FileArchiveService(BlockingQueue<AppointmentRequest> queue) {
+        env.setENVS();
         this.queue = queue;
     }
 

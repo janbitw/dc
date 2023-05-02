@@ -10,7 +10,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int port = EnvironmentVariables.getSocketPort();
+        EnvironmentVariable env = new EnvironmentVariable();
+        try{
+            env.setENVS();
+        }
+        catch(IllegalArgumentException e){
+            System.exit(-1);
+        }
+        int port = env.getSocketPort();
+
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
         BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
         BlockingQueue<AppointmentRequest> outputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
