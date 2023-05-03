@@ -16,6 +16,9 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/*
+ * Check constructor and see if appointment requests are saved into the right directory by counting the files in the directory.
+*/
 class FileArchiveServiceTest {
     BlockingQueue<AppointmentRequest> queue;
 

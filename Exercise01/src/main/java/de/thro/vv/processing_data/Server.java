@@ -12,35 +12,50 @@ import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
+/**
+ * Server is the first step in processing information.
+ * It listens to a server and reads Json files from it to store them in a queue.
+ */
 public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
     private final int port;
     private final Executor executor;
     private final BlockingQueue<AppointmentRequest> inputQueue;
 
-
+    /**
+     * @param port The port to which the server listens to
+     * @param executor Thread that listens to potential input constantly
+     * @param inputQueue The storage where we save the user input for further processing
+     */
     public Server(int port, Executor executor, BlockingQueue<AppointmentRequest> inputQueue) {
         this.port = port;
         this.executor = executor;
         this.inputQueue = inputQueue;
     }
 
-    // Starte den Server und die Quelle
+    /**
+     * The listen method connects to a client.
+     * If a client connects, the handleClient method will be called.
+     */
     public void listen() {
         try (ServerSocket server = new ServerSocket(port)) {
+            logger.info("Server started on port {}", port);
             while (!Thread.currentThread().isInterrupted()) {
-                logger.info("Waiting for the next connection...");
                 Socket client = server.accept();
-                logger.info("New connection established!");
+                logger.info("New client connected: {}", client.getInetAddress());
                 executor.execute(() -> handleClient(client));
             }
-        } catch (Exception x) {
-            logger.error("Ausnahme {}", x.getMessage(), x);
+        } catch (Exception e) {
+            logger.error("Error starting server on port {}: {}", port, e.getMessage(), e);
         }
     }
 
 
-    // Lese Json files aus der Quelle
+    /**
+     * This method is the one that reads input from the source.
+     * It calls the writer method addRequest to store the input.
+     * @param source refers to a Socket object that represents the connection to the client.
+     */
     public void handleClient(Socket source) {
         try (JsonReader reader = new JsonReader(new InputStreamReader(source.getInputStream()))) {
             logger.info("Received request: {}", reader);
@@ -50,11 +65,16 @@ public class Server {
                 addRequest(reader);
             }
         } catch (Exception e) {
-            logger.error("Fehler", e);
+            logger.error("Error when trying to read from the InputStream", e);
         }
     }
 
-    // Nehme Json Files aus der Quelle und füge sie der inputQueue zu
+    /**
+     * addRequest takes input from the handleClient method and transforms this
+     * input into a template model in the form of an AppointmentRequest.
+     * It stores this AppointmentRequest into a queue.
+     * @param reader refers to a JsonReader object that is used to read JSON data from the input source.
+     */
     public void addRequest(JsonReader reader) {
         try {
             AppointmentRequest request = new Gson().fromJson(reader, AppointmentRequest.class);

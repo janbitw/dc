@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+/**
+ * Test constructor, getter and setter for AppointmentRequests
+ */
 class AppointmentRequestTest {
     private final Date currentDate = new Date(1999);
     private AppointmentRequest test;

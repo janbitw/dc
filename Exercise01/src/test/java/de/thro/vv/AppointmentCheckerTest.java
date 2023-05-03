@@ -10,6 +10,9 @@ import java.util.concurrent.BlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test two methods and constructor of AppointmentChecker
+ */
 class AppointmentCheckerTest {
     BlockingQueue<AppointmentRequest> inputQueue;
     BlockingQueue<AppointmentRequest> outputQueue;
@@ -19,6 +22,10 @@ class AppointmentCheckerTest {
         assertDoesNotThrow(() -> new AppointmentChecker(inputQueue, outputQueue));
     }
 
+    /**
+     * Test inputToOutputQueue by verifying whether AppointmentRequests are rightfully put into the inputQueue
+     * @throws InterruptedException can be thrown by inputQueue.put(request)
+     */
     @Test
     void inputToOutputQueueTest() throws InterruptedException {
         int MAX_THREADS = 10;
@@ -34,7 +41,9 @@ class AppointmentCheckerTest {
         assertEquals(1, outputQueue.size());
     }
 
-
+    /**
+     * Test checkAppointmentTest by verifying whether AppointmentRequest's success status is set accordingly.
+     */
     @Test
     void checkAppointmentTest() {
         Date currentDate = new Date(1999);

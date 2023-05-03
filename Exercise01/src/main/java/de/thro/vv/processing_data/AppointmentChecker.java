@@ -8,6 +8,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * AppointmentChecker is the second step in processing data.
+ * The data at this point is in form of AppointmentRequests stored in a queue.
+ * The goal of AppointmentChecker is to verify if those requests are valid (eg in the opening times)
+ * and then move them from the input queue to the output queue.
+ */
 public class AppointmentChecker {
     private static final Logger logger = LoggerFactory.getLogger(AppointmentChecker.class);
     private static final int[] DAY = new int[24];
@@ -16,27 +22,21 @@ public class AppointmentChecker {
     private final BlockingQueue<AppointmentRequest> outputQueue;
     Map<String, String> envs = System.getenv();
 
+    /**
+     * The constructor sets the environment variables like opening times of the system.
+     * @param inputQueue We take data from here.
+     * @param outputQueue We store data into here.
+     */
     public AppointmentChecker(BlockingQueue<AppointmentRequest> inputQueue, BlockingQueue<AppointmentRequest> outputQueue) {
         env.setENVS(envs);
         this.inputQueue = inputQueue;
         this.outputQueue = outputQueue;
     }
 
-    // Check if appointment can be scheduled. Then, set its success status accordingly and return the appointment.
-    public static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
-        int requestHour = appointment.getAppointmentRequestHour();
-
-        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > env.getMaxCustomersPerHour()) {
-            return appointment;
-        }
-
-        DAY[requestHour] += 1;
-        appointment.setSuccess(true);
-        return appointment;
-    }
-
-    // Read AppointmentRequest from global inputQueue.
-    // Take this appointmentRequest and
+    /**
+     * The listen method takes data from the inputQueue if available and puts into the output queue
+     * by calling the inputToOutputQueue.
+     */
     public void listen() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
@@ -50,8 +50,13 @@ public class AppointmentChecker {
         }
     }
 
-    // Take the request you listened to and check first if it is valid by calling checkAppointment,
-    // and then save this processed request into outputQueue.
+    /**
+     * This method receives an appointment from the listen method and
+     * stores it in the output queue.
+     * Before it puts data from the input queue into the output queue,
+     * it calls the check appointment method to mark the appointments either as successful or not.
+     * @param request AppointmentRequest that needs to be stored into the outputQueue.
+     */
     public void inputToOutputQueue(AppointmentRequest request) {
         AppointmentRequest processedRequest = checkAppointment(request);
         try {
@@ -62,5 +67,24 @@ public class AppointmentChecker {
             logger.error("Couldn't put new AppointmentRequest into : {}", e.getMessage(), e);
             Thread.currentThread().interrupt();
         }
+    }
+
+    /**
+     * Receive an appointment and check if the appointment is valid (in the opening times and not overbooked )
+     * Then, set the appointment's success status accordingly and return the appointment.
+     * @param appointment AppointmentRequest that needs to be checked for its validity.
+     * @return Return the same appointment with success attribute on true if the appointment is valid.
+     */
+    //
+    public static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
+        int requestHour = appointment.getAppointmentRequestHour();
+
+        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > env.getMaxCustomersPerHour()) {
+            return appointment;
+        }
+
+        DAY[requestHour] += 1;
+        appointment.setSuccess(true);
+        return appointment;
     }
 }

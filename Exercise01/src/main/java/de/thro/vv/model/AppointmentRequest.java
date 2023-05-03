@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-
+/**
+ * The template that we use to store and process data.
+ */
 public class AppointmentRequest {
     @SerializedName(value = "customerName")
     private String customerName;
@@ -14,6 +16,13 @@ public class AppointmentRequest {
     private Date createDate; // yyyy-MM-dd hh:mm:ss
     private boolean success;
 
+    /**
+     *
+     * @param customerName Name of customer
+     * @param appointmentRequestHour Desired hour of the appointment
+     * @param createDate Creation date
+     * @param success is used to say whether an appointmentRequest was booked or not
+     */
     public AppointmentRequest(String customerName, int appointmentRequestHour, Date createDate, boolean success) {
         this.customerName = customerName;
         this.appointmentRequestHour = appointmentRequestHour;

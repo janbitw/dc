@@ -11,6 +11,10 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+/**
+ * Check all the environment variables by asserting their values and see if they throw exceptions.
+ * Also check methods, getter and setter.
+ */
 class EnvironmentVariableTest {
     static HashMap<String, String> envs = new HashMap<>();
     @SystemStub

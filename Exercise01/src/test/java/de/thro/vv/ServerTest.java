@@ -12,6 +12,9 @@ import java.util.concurrent.Executors;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test constructor and the writing into the inputQueue.
+ */
 class ServerTest {
     BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(1);
     ExecutorService executor = Executors.newFixedThreadPool(1);

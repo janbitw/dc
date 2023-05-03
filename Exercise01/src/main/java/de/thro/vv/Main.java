@@ -13,6 +13,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The main method calls all the processing data classes, sets EnvironmentVariables and logs basic details.
+ * @author Jan Tamas
+ */
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private static final int MAX_THREADS = 10;
@@ -21,6 +25,7 @@ public class Main {
         Main m = new Main();
         m.logBasicDetails();
 
+        // Set environment variables
         EnvironmentVariable env = new EnvironmentVariable();
         try {
             Map<String, String> envs = System.getenv();
@@ -30,26 +35,30 @@ public class Main {
         }
         int port = env.getSocketPort();
 
+        // These are the variables that are used to process data
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
         BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
         BlockingQueue<AppointmentRequest> outputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
 
-        // Create server
+        // Create and start the first step: Server -> InputQueue
         Server serverListener = new Server(port, executor, inputQueue);
         Thread server = new Thread(serverListener::listen);
         server.start();
 
-        // Appointment Checker erstellen und starten
+        // Second step: InputQueue -> OutputQueue
         AppointmentChecker appointmentListener = new AppointmentChecker(inputQueue, outputQueue);
         Thread appointmentCheckerThread = new Thread(appointmentListener::listen);
         appointmentCheckerThread.start();
 
-        // File archive manager
+        // Third step: OutputQueue -> Folder
         FileArchiveService fileManager = new FileArchiveService(outputQueue);
         Thread fileArchiveserviceThread = new Thread(fileManager::listen);
         fileArchiveserviceThread.start();
     }
 
+    /**
+     * Log basic details for the user to check
+     */
     public void logBasicDetails() {
         logger.info("Start program");
         logger.info("JAVA_HOME: {}", System.getenv("JAVA_HOME"));
