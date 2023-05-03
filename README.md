@@ -10,6 +10,8 @@ This exercise01 code simulates an appointment scheduler, in which a user can cre
 them into a directory. 
 The technology used is TCP Sockets and Docker. 
 
+You can start the program by typing this in your terminal: `docker-compose up -d`
+
 
 ### Environment Variables
 
