@@ -16,10 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppointmentCheckerTest {
     BlockingQueue<AppointmentRequest> inputQueue;
     BlockingQueue<AppointmentRequest> outputQueue;
+    EnvironmentVariable env;
 
     @Test
     void constructor() {
-        assertDoesNotThrow(() -> new AppointmentChecker(inputQueue, outputQueue));
+        assertDoesNotThrow(() -> new AppointmentChecker(env, inputQueue, outputQueue));
     }
 
     /**
@@ -31,7 +32,7 @@ class AppointmentCheckerTest {
         int MAX_THREADS = 10;
         BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
         BlockingQueue<AppointmentRequest> outputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
-        AppointmentChecker transformer = new AppointmentChecker(inputQueue, outputQueue);
+        AppointmentChecker transformer = new AppointmentChecker(env,inputQueue, outputQueue);
         Date currentDate = new Date(1999);
 
         AppointmentRequest request = new AppointmentRequest("Jan", 10, currentDate);
@@ -46,12 +47,13 @@ class AppointmentCheckerTest {
      */
     @Test
     void checkAppointmentTest() {
+        AppointmentChecker transformer = new AppointmentChecker(env,inputQueue, outputQueue);
         Date currentDate = new Date(1999);
         AppointmentRequest correct = new AppointmentRequest("Correcto", 10, currentDate);
         AppointmentRequest wrong = new AppointmentRequest("Wrongo", -10, currentDate);
         assertFalse(correct.isSuccess());
         assertFalse(wrong.isSuccess());
-        assertFalse(AppointmentChecker.checkAppointment(wrong).isSuccess());
+        assertFalse(transformer.checkAppointment(wrong).isSuccess());
 
     }
 }
