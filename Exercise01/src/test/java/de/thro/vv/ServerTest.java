@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ServerTest {
     BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(1);
     ExecutorService executor = Executors.newFixedThreadPool(1);
-    EnvironmentVariable env;
+    EnvironmentVariable env = new EnvironmentVariable();
 
     @Test
     void constructor() {
