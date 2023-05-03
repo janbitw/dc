@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AppointmentCheckerTest {
     BlockingQueue<AppointmentRequest> inputQueue;
     BlockingQueue<AppointmentRequest> outputQueue;
-    EnvironmentVariable env;
+    EnvironmentVariable env = new EnvironmentVariable();
 
     @Test
     void constructor() {
