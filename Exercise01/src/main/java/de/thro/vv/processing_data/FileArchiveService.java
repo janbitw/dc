@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -20,18 +21,16 @@ import java.util.concurrent.BlockingQueue;
 public class FileArchiveService {
     private static final Logger logger = LoggerFactory.getLogger(FileArchiveService.class);
     private static final String DELIMITER = "/";
-    private static final EnvironmentVariable env = new EnvironmentVariable();
-    private static final String PATH = env.getSavePath();
     private final BlockingQueue<AppointmentRequest> queue;
-    Map<String, String> envs = System.getenv();
+    private EnvironmentVariable env;
 
 
     /**
      * The constructor also sets environment variables.
      * @param queue Output queue
      */
-    public FileArchiveService(BlockingQueue<AppointmentRequest> queue) {
-        env.setENVS(envs);
+    public FileArchiveService(EnvironmentVariable env, BlockingQueue<AppointmentRequest> queue) {
+        this.env = env;
         this.queue = queue;
     }
 
@@ -59,8 +58,14 @@ public class FileArchiveService {
      * @param request AppointmentRequest that needs to be saved.
      */
     public void saveFile(AppointmentRequest request) {
-        String folderName = request.isSuccess() ? PATH + "/success" : PATH + "/failed";
+        String path = env.getSavePath();
+        String folderName = request.isSuccess() ? path + "/success" : path + "/failed";
         File folder = new File(folderName + DELIMITER + request.getAppointmentRequestHour());
+        try {
+            Files.createDirectories(Paths.get(folderName + DELIMITER + request.getAppointmentRequestHour()));
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
 
         String fileName = request.getCustomerName() + ".json";
         File file = new File(folder.getPath() + DELIMITER + fileName);

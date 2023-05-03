@@ -1,0 +1,5 @@
+{ "customerName": "Jan1", "appointmentRequestHour": "10", "createDate": "2012-04-23T18:25:43.511Z"}
+{ "customerName": "Jan2", "appointmentRequestHour": "10", "createDate": "2012-04-23T18:25:43.511Z"}
+{ "customerName": "Jan3", "appointmentRequestHour": "10", "createDate": "2012-04-23T18:25:43.511Z"}
+
+END_TIME=17;MAX_CUSTOMERS_PER_HOUR=1;SAVE_PATH=appointments;SOCKET_PORT=1024;START_TIME=8

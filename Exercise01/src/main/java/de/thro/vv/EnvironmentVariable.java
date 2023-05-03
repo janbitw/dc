@@ -30,8 +30,8 @@ public class EnvironmentVariable {
     private String savePath;
 
     /**
-     * This method reads the environment variables from the system and c
-     * hecks wether these are correct by calling other functions.
+     * This method reads the environment variables from the system and checks
+     * whether these are correct by calling other functions.
      * @param getEnv is used to get and set environment variables.
      * @throws IllegalArgumentException is thrown by every environment variable that is set accordingly.
      */

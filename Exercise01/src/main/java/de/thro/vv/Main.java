@@ -26,6 +26,8 @@ public class Main {
         m.logBasicDetails();
 
         // Set environment variables
+        // These are the ones that I use:
+        // END_TIME=17;MAX_CUSTOMERS_PER_HOUR=1;SAVE_PATH=appointments;SOCKET_PORT=1024;START_TIME=8
         EnvironmentVariable env = new EnvironmentVariable();
         try {
             Map<String, String> envs = System.getenv();
@@ -33,25 +35,25 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.exit(-1);
         }
-        int port = env.getSocketPort();
 
         // These are the variables that are used to process data
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
         BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
         BlockingQueue<AppointmentRequest> outputQueue = new ArrayBlockingQueue<>(MAX_THREADS);
 
-        // Create and start the first step: Server -> InputQueue
-        Server serverListener = new Server(port, executor, inputQueue);
+        // First step: Server -> InputQueue
+        Server serverListener = new Server(env, executor, inputQueue);
         Thread server = new Thread(serverListener::listen);
         server.start();
 
+
         // Second step: InputQueue -> OutputQueue
-        AppointmentChecker appointmentListener = new AppointmentChecker(inputQueue, outputQueue);
+        AppointmentChecker appointmentListener = new AppointmentChecker(env, inputQueue, outputQueue);
         Thread appointmentCheckerThread = new Thread(appointmentListener::listen);
         appointmentCheckerThread.start();
 
         // Third step: OutputQueue -> Folder
-        FileArchiveService fileManager = new FileArchiveService(outputQueue);
+        FileArchiveService fileManager = new FileArchiveService(env, outputQueue);
         Thread fileArchiveserviceThread = new Thread(fileManager::listen);
         fileArchiveserviceThread.start();
     }

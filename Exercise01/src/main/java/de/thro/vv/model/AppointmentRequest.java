@@ -14,7 +14,7 @@ public class AppointmentRequest {
     private int appointmentRequestHour;
     @SerializedName(value = "createDate")
     private Date createDate; // yyyy-MM-dd hh:mm:ss
-    private boolean success;
+    private transient boolean success;
 
     /**
      *

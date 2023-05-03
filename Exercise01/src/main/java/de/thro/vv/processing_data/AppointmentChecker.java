@@ -4,8 +4,6 @@ import de.thro.vv.model.AppointmentRequest;
 import de.thro.vv.EnvironmentVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -16,19 +14,18 @@ import java.util.concurrent.BlockingQueue;
  */
 public class AppointmentChecker {
     private static final Logger logger = LoggerFactory.getLogger(AppointmentChecker.class);
-    private static final int[] DAY = new int[24];
-    private static final EnvironmentVariable env = new EnvironmentVariable();
+    private int[] day = new int[24];
+    private EnvironmentVariable env;
     private final BlockingQueue<AppointmentRequest> inputQueue;
     private final BlockingQueue<AppointmentRequest> outputQueue;
-    Map<String, String> envs = System.getenv();
 
     /**
      * The constructor sets the environment variables like opening times of the system.
      * @param inputQueue We take data from here.
      * @param outputQueue We store data into here.
      */
-    public AppointmentChecker(BlockingQueue<AppointmentRequest> inputQueue, BlockingQueue<AppointmentRequest> outputQueue) {
-        env.setENVS(envs);
+    public AppointmentChecker(EnvironmentVariable env, BlockingQueue<AppointmentRequest> inputQueue, BlockingQueue<AppointmentRequest> outputQueue) {
+        this.env = env;
         this.inputQueue = inputQueue;
         this.outputQueue = outputQueue;
     }
@@ -76,14 +73,14 @@ public class AppointmentChecker {
      * @return Return the same appointment with success attribute on true if the appointment is valid.
      */
     //
-    public static AppointmentRequest checkAppointment(AppointmentRequest appointment) {
+    public AppointmentRequest checkAppointment(AppointmentRequest appointment) {
         int requestHour = appointment.getAppointmentRequestHour();
 
-        if ((requestHour < 0 || requestHour > 23) || DAY[requestHour] > env.getMaxCustomersPerHour()) {
+        if (requestHour < 0 || requestHour > 23 || day[requestHour] >= env.getMaxCustomersPerHour()) {
             return appointment;
         }
 
-        DAY[requestHour] += 1;
+        day[requestHour] += 1;
         appointment.setSuccess(true);
         return appointment;
     }

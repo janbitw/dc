@@ -2,6 +2,7 @@ package de.thro.vv.processing_data;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import de.thro.vv.EnvironmentVariable;
 import de.thro.vv.model.AppointmentRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +24,11 @@ public class Server {
     private final BlockingQueue<AppointmentRequest> inputQueue;
 
     /**
-     * @param port The port to which the server listens to
      * @param executor Thread that listens to potential input constantly
      * @param inputQueue The storage where we save the user input for further processing
      */
-    public Server(int port, Executor executor, BlockingQueue<AppointmentRequest> inputQueue) {
-        this.port = port;
+    public Server(EnvironmentVariable env, Executor executor, BlockingQueue<AppointmentRequest> inputQueue) {
+        this.port = env.getSocketPort();
         this.executor = executor;
         this.inputQueue = inputQueue;
     }
