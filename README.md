@@ -1,7 +1,7 @@
 # Distributed Systems
 This Distributed Systems class is one big project, made out of three subexercises:
 1. [Appointment Scheduler](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=221794)
-2. [exercise02](file:///C:/Users/jtama/Downloads/Praktikum02_RestAPI_V2-1.pdf)
+2. [exercise02](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=229266)
 3. exercise03
 
 ## Appointment Scheduler
@@ -26,11 +26,9 @@ To run this project, you will need to add the following environment variables to
 `SAVE_PATH` The directory where successful and failed appointments will be stored
 
 
-## Author
-[@Jan Tamas](https://inf-git.th-rosenheim.de/studtamaja4160)
-
 ## 🚀 About Me
-I'm an aspiring full stack developer and this project is my biggest and most awe inducing project ever... I feel like I'm way more professional now than before.
+[@Jan Tamas](https://inf-git.th-rosenheim.de/studtamaja4160)
+I'm an aspiring Steve Jobs and this project is my biggest and most awe inducing project ever... I feel like I'm way more professional now than before.
 Thank you for this opportunity.
 
 ## Acknowledgements
