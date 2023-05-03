@@ -18,10 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ServerTest {
     BlockingQueue<AppointmentRequest> inputQueue = new ArrayBlockingQueue<>(1);
     ExecutorService executor = Executors.newFixedThreadPool(1);
+    EnvironmentVariable env;
 
     @Test
     void constructor() {
-        assertDoesNotThrow(() -> new Server(1024, executor, inputQueue));
+        assertDoesNotThrow(() -> new Server(env, executor, inputQueue));
     }
 
 

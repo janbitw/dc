@@ -35,15 +35,11 @@ dependencies {
 test {
     useJUnitPlatform()
 
-    environment "SOCKET_PORT", 15000
+    environment "SOCKET_PORT", 1024
     environment "START_TIME", 8
-    environment "END_TIME", 9
+    environment "END_TIME", 17
     environment "MAX_CUSTOMERS_PER_HOUR", 1
     environment "SAVE_PATH", "/output/appointments"
-    environment "JAVA_HOME", "C:/Program Files/Eclipse Adoptium/jdk-17.0.6.10-hotspot"
-    environment "os.name", "Windows"
-    environment "os.version", "11"
-    environment "user.name", "Jan"
     ignoreFailures = true
     finalizedBy jacocoTestReport
 }

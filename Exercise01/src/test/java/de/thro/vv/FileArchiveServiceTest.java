@@ -20,11 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Check constructor and see if appointment requests are saved into the right directory by counting the files in the directory.
 */
 class FileArchiveServiceTest {
+    EnvironmentVariable env;
     BlockingQueue<AppointmentRequest> queue;
 
     @Test
     void constructor() {
-        assertDoesNotThrow(() -> new FileArchiveService(queue));
+        assertDoesNotThrow(() -> new FileArchiveService(env,queue));
     }
 
 
@@ -33,7 +34,7 @@ class FileArchiveServiceTest {
         EnvironmentVariable env = new EnvironmentVariable();
         Map<String, String> envs = System.getenv();
         env.setENVS(envs);
-        FileArchiveService fas = new FileArchiveService(queue);
+        FileArchiveService fas = new FileArchiveService(env,queue);
         Date currentDate = new Date(1999);
         AppointmentRequest correct = new AppointmentRequest("Jan", 10, currentDate, true);
         AppointmentRequest wrong = new AppointmentRequest("Jan", 10, currentDate, false);
