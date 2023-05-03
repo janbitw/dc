@@ -1,7 +1,7 @@
 # Distributed Systems
 This Distributed Systems class is one big project, made out of three subexercises:
 1. [Appointment Scheduler](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=221794)
-2. [exercise02](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=229266)
+2. [Car order service](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=229266)
 3. exercise03
 
 ## Appointment Scheduler
