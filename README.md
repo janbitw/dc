@@ -29,8 +29,7 @@ To run this project, you will need to add the following environment variables to
 ## 🚀 About Me
 [@Jan Tamas](https://inf-git.th-rosenheim.de/studtamaja4160)
 
-
-I'm an aspiring Steve Jobs and this project is my biggest and most awe inducing project ever... I feel like I'm way more professional now than before.
+I'm an aspiring Full Stack Developer and this project is my biggest and most awe inducing project ever... I feel like I'm way more professional now than before.
 Thank you for this opportunity.
 
 ## Acknowledgements
