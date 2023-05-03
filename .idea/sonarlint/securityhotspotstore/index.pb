@@ -1,0 +1,21 @@
+
+c
+3Exercise01/gradle/wrapper/gradle-wrapper.properties,6\8\68d1820072756355fd9a4abffab9c3a83e2abeb9
+E
+Exercise01/.gitignore,2\d\2d8449029d5bb3cd7713e4bab402240ae424905c
+I
+Exercise01/.gitlab-ci.yml,a\0\a07208bb00af333337acaca38ba7b1d38889d8e9
+G
+Exercise01/build.gradle,6\c\6ced017af4b5c53b843d397dc9a119d4c26d40cc
+^
+.Exercise01/src/main/java/de/thro/vv/Hello.java,5\c\5c4bc477d6012bda8bf764554acc842c8b1a5a56
+B
+Exercise01/gradlew,5\e\5e9987f7c243a5607588c08027d107fb145e84d4
+J
+Exercise01/settings.gradle,3\b\3be246864c48bfeccecb239d9278dca5202a9dd9
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+E
+Exercise01/Dockerfile,a\9\a912930b14330e762d735162f8f63b75e3b53bf0
+F
+Exercise01/gradlew.bat,6\2\626ceebc92331eaa60a6e3c3be8a89f1fff19cc9

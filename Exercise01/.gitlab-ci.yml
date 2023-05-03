@@ -3,6 +3,7 @@ stages:
   - build
   - analyse
   - deploy
+  - docker-compose
 
 variables:
   PROJECT_DIR: "./Exercise01/"
@@ -56,4 +57,17 @@ dockerize-Ex01:
     - cd $PROJECT_DIR
     - docker build -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
+
+docker-compose-Ex01:
+  image: docker:latest
+  stage: docker-compose
+  services:
+    - docker:dind
+  before_script:
+    - docker pull eclipse-temurin:17.0.6_10-jre
+    - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    - cd $PROJECT_DIR
+    - docker-compose up -d
+    - docker ps | grep -q "exercise01"
 
