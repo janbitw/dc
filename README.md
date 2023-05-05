@@ -1,5 +1,5 @@
 # Distributed Systems
-This Distributed Systems class is one big project, made out of three subexercises:
+This Distributed Systems class contains three projects:
 1. [Appointment Scheduler](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=221794)
 2. [Car order service](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=229266)
 3. exercise03
@@ -9,8 +9,6 @@ This Distributed Systems class is one big project, made out of three subexercise
 This exercise01 code simulates an appointment scheduler, in which a user can create appointments and save 
 them into a directory. 
 The technology used is TCP Sockets and Docker. 
-
-You can start the program by typing this in your terminal: `docker-compose up -d`
 
 
 ### Environment Variables
@@ -29,10 +27,8 @@ To run this project, you will need to add the following environment variables to
 
 
 ## 🚀 About Me
-[@Jan Tamas](https://inf-git.th-rosenheim.de/studtamaja4160)
 
-I'm an aspiring Full Stack Developer and this project is my biggest and most awe inducing project ever... I feel like I'm way more professional now than before.
-Thank you for this opportunity.
+I feel like I had no clue when writing this project, I still feel like an imposter, but this project is my biggest and most awe inducing project ever... I feel like I'm way more professional now than ever before.
 
 ## Acknowledgements
 Thanks to all my friends and colleagues that helped me fix my code and made useful suggestions on how to tackle this whole problem!
