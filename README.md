@@ -4,6 +4,8 @@ This Distributed Systems class contains three projects:
 2. [Car order service](https://learning-campus.th-rosenheim.de/mod/resource/view.php?id=229266)
 3. exercise03
 
+Please click on the Exercise01 folder, this is where you can find the Appointment Scheduler.
+
 ## Appointment Scheduler
 
 This exercise01 code simulates an appointment scheduler, in which a user can create appointments and save 
